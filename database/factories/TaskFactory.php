@@ -21,6 +21,8 @@ class TaskFactory extends Factory
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(5),
             'status' => collect(TaskStatus::cases())->random(),
+            'created_at' => now()->subHours(rand(0, 72)),
+            'updated_at' => fn ($attributes) => $attributes['created_at']
         ];
     }
 }
