@@ -23,6 +23,13 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
+      - name: Setup app
+        run: |
+          cp .env.example .env
+          touch database/database.sqlite
+          php artisan key:generate
+          php artisan migrate
+
       - name: Copy Environment File
         run: cp .env.example .env
 
@@ -34,6 +41,21 @@ jobs:
 
       - name: Test backend
         run: composer test
+
+      - name: Run PHP Server
+        run: php -S localhost:8000 -t public > storage/logs/server.log 2>&1 &
+
+      - name: Wait for Server to Start
+        run: sleep 2
+
+      - name: Make check_reachability.sh executable
+        run: chmod +x .github/scripts/check_reachability.sh
+
+      - name: Check API reachability
+        run: .github/scripts/check_reachability.sh http://localhost:8000/api/status
+
+      - name: Check Docs reachability
+        run: .github/scripts/check_reachability.sh http://localhost:8000/docs
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -52,6 +74,12 @@ jobs:
 
       - name: Test frontend
         run: npm run test
+
+      - name: Run Vite server
+        run: npm run dev &
+
+      - name: Check App reachability
+        run: .github/scripts/check_reachability.sh http://localhost:8000
 
       - name: Show Laravel logs
         if: failure()

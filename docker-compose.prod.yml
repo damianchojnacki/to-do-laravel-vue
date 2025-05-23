@@ -1,0 +1,14 @@
+services:
+  laravel.test:
+    build:
+      context: .
+      target: frankenphp_prod
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      DATABASE_URL: ${DATABASE_URL}
+      DB_CONNECTION: "${DB_CONNECTION:-sqlite}"
+      LOG_STACK: "${LOG_STACK:-stderr}"
+    ports:
+      - "80:80"
