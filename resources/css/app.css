@@ -90,3 +90,23 @@ html {
         @apply bg-background text-foreground;
     }
 }
+
+.table-move,
+.table-enter-active,
+.table-leave-active {
+    transition: all 0.5s ease;
+}
+
+.table-enter-from,
+.table-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.table-leave-active {
+    position: absolute;
+}
+
+.overflow-auto:has(.table-leave-active) {
+    overflow: hidden !important;
+}

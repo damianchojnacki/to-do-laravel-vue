@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends DataRecord">
 import type { ColumnDef, ColumnFiltersState, SortingState } from '@tanstack/vue-table';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -9,6 +9,7 @@ import { ref, watch } from 'vue';
 import DataTableToolbar from '@/components/DataTable/DataTableToolbar.vue';
 import { PaginatedResponse } from '@/types/Response';
 import DataTablePagination from './DataTablePagination.vue';
+import {DataRecord} from "@/types/DataRecord"
 
 type DataTableQuery = { sorting: SortingState; filters: ColumnFiltersState; page: number };
 
@@ -87,11 +88,15 @@ const table = useVueTable({
                 </TableHeader>
                 <TableBody>
                     <template v-if="table.getRowModel().rows?.length">
-                        <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
-                            <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-                                <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                            </TableCell>
-                        </TableRow>
+                        <TransitionGroup
+                            name="table"
+                        >
+                            <TableRow v-for="row in table.getRowModel().rows" :key="row.original.id">
+                                <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+                                    <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+                                </TableCell>
+                            </TableRow>
+                        </TransitionGroup>
                     </template>
 
                     <TableRow v-else>
