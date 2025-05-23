@@ -22,8 +22,8 @@ const store = useTaskStore();
 </script>
 
 <template>
-    <div class="flex items-center justify-between">
-        <div class="flex flex-1 items-center space-x-2">
+    <div class="flex items-center justify-between flex-col sm:flex-row gap-3">
+        <div class="flex flex-1 items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
             <Input
                 placeholder="Filter tasks..."
                 :model-value="(table.getColumn('title')?.getFilterValue() as string) ?? ''"
@@ -39,7 +39,7 @@ const store = useTaskStore();
             </Button>
         </div>
 
-        <Button variant="outline" class="h-8 px-2 lg:px-3" @click="store.open()">
+        <Button variant="outline" class="h-8 px-2 lg:px-3 w-full sm:w-auto" @click="store.open()">
             <PlusIcon class="mr-2 h-4 w-4" />
 
             Create new
