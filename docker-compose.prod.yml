@@ -4,6 +4,7 @@ services:
       context: .
       target: frankenphp_prod
     environment:
+      SERVER_NAME: ${SERVER_NAME}
       APP_ENV: ${APP_ENV}
       APP_URL: ${APP_URL}
       APP_KEY: ${APP_KEY}
