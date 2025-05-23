@@ -75,9 +75,6 @@ jobs:
       - name: Test frontend
         run: npm run test
 
-      - name: Run Vite server
-        run: npm run dev &
-
       - name: Check App reachability
         run: .github/scripts/check_reachability.sh http://localhost:8000
 

@@ -3,7 +3,6 @@ import autoprefixer from 'autoprefixer';
 import laravel from 'laravel-vite-plugin';
 import path from 'path';
 import tailwindcss from 'tailwindcss';
-import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
