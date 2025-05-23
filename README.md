@@ -4,6 +4,8 @@
 
 ![Tests](https://github.com/damianchojnacki/to-do-laravel-vue/actions/workflows/tests.yml/badge.svg)
 
+Visit demo app at https://to-do.damianchojnacki.com.
+
 ## Features
 
 - Browse, filter and sort tasks in elegant table view.
