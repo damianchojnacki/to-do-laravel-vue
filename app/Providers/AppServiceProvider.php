@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Dedoc\Scramble\Scramble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
         Model::preventAccessingMissingAttributes();
+        Scramble::ignoreDefaultRoutes();
     }
 
     /**
