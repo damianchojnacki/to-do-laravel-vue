@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Task;
 use App\Enums\TaskStatus;
+use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -36,11 +36,10 @@ class TaskControllerTest extends TestCase
         $response = $this->postJson(route('tasks.store'), $payload);
 
         $response->assertOk()
-            ->assertJson(fn (AssertableJson $json): \Illuminate\Testing\Fluent\AssertableJson =>
-                $json->where('data.title', $payload['title'])
-                    ->where('data.description', $payload['description'])
-                    ->where('data.status', $payload['status'])
-                    ->etc()
+            ->assertJson(fn (AssertableJson $json): \Illuminate\Testing\Fluent\AssertableJson => $json->where('data.title', $payload['title'])
+                ->where('data.description', $payload['description'])
+                ->where('data.status', $payload['status'])
+                ->etc()
             );
 
         $this->assertDatabaseHas('tasks', $payload);
