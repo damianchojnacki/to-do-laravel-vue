@@ -32,8 +32,10 @@ const pagination = ref({
     pageSize: props.data.meta.per_page,
 });
 
+const animate = ref(true)
+watch(props.data, () => animate.value = true)
+
 watch([sorting, columnFilters, pagination], () => {
-    console.log(pagination.value);
     emit('update:query', {
         sorting: sorting.value,
         filters: columnFilters.value,
@@ -66,7 +68,11 @@ const table = useVueTable({
     rowCount: props.data.meta.total,
     onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
     onColumnFiltersChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnFilters),
-    onPaginationChange: (updaterOrValue) => valueUpdater(updaterOrValue, pagination),
+    onPaginationChange: (updaterOrValue) => {
+        animate.value = false
+
+        valueUpdater(updaterOrValue, pagination)
+    },
     getCoreRowModel: getCoreRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -90,6 +96,7 @@ const table = useVueTable({
                     <template v-if="table.getRowModel().rows?.length">
                         <TransitionGroup
                             name="table"
+                            :css="animate"
                         >
                             <TableRow v-for="row in table.getRowModel().rows" :key="row.original.id">
                                 <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
