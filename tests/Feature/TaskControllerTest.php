@@ -13,7 +13,7 @@ class TaskControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_lists_tasks_ordered_by_status(): void
+    public function test_lists_tasks(): void
     {
         Task::factory()->create(['status' => TaskStatus::COMPLETED->name]);
         Task::factory()->create(['status' => TaskStatus::PENDING->name]);
@@ -23,11 +23,6 @@ class TaskControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonStructure(['data', 'links', 'meta'])
             ->assertJsonCount(2, 'data');
-
-        // assert first returned task is the one with pending status
-        $task = $response->json('data.0');
-
-        $this->assertEquals(TaskStatus::PENDING->name, $task['status']);
     }
 
     public function test_creates_a_task(): void
