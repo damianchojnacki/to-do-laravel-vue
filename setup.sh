@@ -16,18 +16,11 @@ if [ ! -f .env ]; then
 fi
 
 docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd)":/var/www/html \
-    -w /var/www/html \
-    laravelsail/php84-composer:latest \
-    composer install --ignore-platform-reqs --no-cache
-
-docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd)":/var/www/html \
-    -w /var/www/html \
-    laravelsail/php84-composer:latest \
-    php artisan key:generate
+  -u "$(id -u):$(id -g)" \
+  -v "$(pwd):/var/www/html" \
+  -w /var/www/html \
+  laravelsail/php84-composer:latest \
+  bash -c 'composer install --ignore-platform-reqs; php artisan key:generate'
 
 CYAN='\033[0;36m'
 LIGHT_CYAN='\033[1;36m'
@@ -56,7 +49,16 @@ touch database/database.sqlite
 
 ./vendor/bin/sail artisan migrate:fresh --seed
 
+./vendor/bin/sail npm install
+
+./vendor/bin/sail npm run build
+
 ./vendor/bin/sail --help
 
+echo ""
 echo "Please add alias to .bashrc or .profile to easily run sail:"
 echo "alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'"
+echo ""
+
+echo "Visit app on http://localhost"
+echo "Visit API documentation on http://localhost/docs"
