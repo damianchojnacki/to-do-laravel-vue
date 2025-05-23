@@ -52,7 +52,7 @@ jobs:
         run: chmod +x .github/scripts/check_reachability.sh
 
       - name: Check API reachability
-        run: .github/scripts/check_reachability.sh http://localhost:8000/api/status
+        run: .github/scripts/check_reachability.sh http://localhost:8000/api
 
       - name: Check Docs reachability
         run: .github/scripts/check_reachability.sh http://localhost:8000/docs
