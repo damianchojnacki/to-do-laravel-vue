@@ -6,7 +6,9 @@ parameters:
 
     paths:
         - app/
+        - bootstrap/
         - database/
+        - routes/
         - tests/
 
     # Level 10 is the highest level
