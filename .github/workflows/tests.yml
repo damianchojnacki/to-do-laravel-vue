@@ -73,7 +73,7 @@ jobs:
         run: npm run lint
 
       - name: Test frontend
-        run: npm run test -- run
+        run: LARAVEL_BYPASS_ENV_CHECK=1 npm run test -- run
 
       - name: Check App reachability
         run: .github/scripts/check_reachability.sh http://localhost:8000
