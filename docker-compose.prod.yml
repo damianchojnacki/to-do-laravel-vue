@@ -14,3 +14,8 @@ services:
       - caddy_data:/data
       - caddy_config:/config
       - storage:/app/storage
+
+volumes:
+  caddy_data:
+  caddy_config:
+  storage:
