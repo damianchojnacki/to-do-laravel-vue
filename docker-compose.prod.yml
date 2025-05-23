@@ -10,5 +10,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       DB_CONNECTION: "${DB_CONNECTION:-sqlite}"
       LOG_STACK: "${LOG_STACK:-stderr}"
-    ports:
-      - "80:80"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - storage:/app/storage
